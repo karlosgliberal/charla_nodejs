@@ -1,0 +1,545 @@
+<!doctype html>  
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Drupal & Node.js</title>
+
+		<meta name="description" content="Presetanción charla Drupal & node.js drupalcamp2012 Madrid">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<!-- <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'> -->
+		
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/lanayru.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- <link href="css/video-js.css" rel="stylesheet" type="text/css"> -->
+    <!-- video.js must be in the <head> for older IEs to work. -->
+    <!-- <script src="js/video.js"></script> -->
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	
+	<body>
+		
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Drupal & Node.js</h1>
+					<h3 class="green">¿Amigos o enemigos?</h3>
+				</section>
+        
+        <section>
+            <section>
+                <header>
+                    <h2>Soy Karlos g Liberal</h2>
+                    <h4>...también se me conoce como patxangas</h4>
+                </header>
+                <div class="top">
+                    <span class="column big">
+                        <img src="assets/image/patxangas.jpg" class="bordered size_256 box">
+                        <h4><a href="http://twitter.com/patxangas">@patxangas</a></h4>
+                    </span>
+                </div>
+                <div class="flecha"></div>
+            </section>
+          <section>
+          <h2> Investic <strong>Fuimos</strong></h2>
+            <div>
+              <img src="assets/image/investic.jpg" class="bordered size_50">
+            </div>
+          </section>
+          <section>
+          <h2><strong>Interzonas</strong> Seremos</h2>
+            <br>
+           <div>
+           Release Early, Release Often y Lánzalo como sea.
+            Somos código y hacemos código, queremos que nuestro código se use, se mejore, se ensucie, se mezcle, mute o muera. El código es como un ser vivo que hasta ahora lo teníamos encerrado en nuestras cuatro paredes, ahora preferimos que como un virus viva libre y ocurra lo que tenga que ocurrir con él.
+           </div>
+           <div class="box">
+           <blockquote cite="http://nodejs.org/#about" class="green">
+           Libera rápido, libera pronto, y haz un bonito cadáver
+            </blockquote>
+         </div>
+          </section>
+          <section data-size="middle">
+            <h2> Qué nos mola </h2>
+                <br>
+                <div><h4>#drupal #nodejs #visualizacion de datos, #fluidinfo, #meteora, #enyojs, #nodejitsu, #javascript, #arduino</h4></div>
+                <br>
+                <div class="box"><h3 class="green">Pero en definitiva lo que queremos ser es...<h3></div>
+          </section>
+          <section>
+              <header class="box">
+                <h2 class="green">Modernos</h2>
+              </header>
+              <img src="assets/image/modernos2.png" class="bordered size_50">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2> Node.js</h2>
+            <img src="assets/image/node_js_nodes.png" class="bordered size_50">
+            <blockquote cite="http://nodejs.org/#about">
+              El objetivo de <strong>Node.js</strong> es proporcionar una manera fácil de construir programas de red escalables
+            </blockquote>
+          </section>
+          <section>
+            <h2> Node.js</h2>
+            <div><p>Node.js es inventado por Ryan Dahl en el verano del 2009 trabajando en Joyent. Ahora el proyecto lo lidera Isaac Z. Schlueter</p></div>
+            <div class="left">
+              <img src="assets/image/ryan.jpg" class="bordered size_50">
+              <h4> <a href="https://twitter.com/ryah">Ryan Dahl Padre de la criatura</a>
+            </div>
+            <div class="right"> 
+              <img src="assets/image/isaac.jpg" class="bordered size_50">
+              <h4> <a href="https://twitter.com/izs">Isaac Z. Schlueter nuevo lider</a> 
+            </div>
+          </section>
+          <section>
+            <h2 class="green"> Node.js</h2>
+            <img src="assets/image/runtime.png">
+            <h2> Runtime != Browser</h2>
+          </section>
+          <section>
+            <h2 class="green"> Node.js</h2>
+            <ul>
+              <li>Node es el entorno de ejecución más librerías.</li>
+              <li>Basado en un conjunto de bibliotecas en C sobre el motor V8 de Google</li>
+              <li>Utiliza un ciclo de eventos en lugar de hilos nuevos por cada conexión (event loop).</li>
+              <li>Cada operación de I/O de node es <strong>asíncrona</strong></li>
+              <li>Centrado en la eficiencia</li>
+              <li>Diseñado para la red. "Request" y "response", porque no hay nada más en la web</li>
+              <li>Puede manejar miles de conexiones simultáneas con una sobrecarga mínima (CPU / MEMORY) en un sólo proceso</li>
+              <li>Javascript del lado del servidor (SSJS)</li>
+            </ul>
+          </section>
+          <section>
+          <h2>Para qué esperar pudiendo ser Asíncronos</h2>
+          <pre>  <code contenteditable>
+// E/S Bloqueante
+var urls = db.query("select * from urls"); //esperar
+urls.each(function(url){
+  var page = http.get(url); //esperar
+  save(page); //esperar
+});
+
+// E/s No bloqueante, petición asincrona
+db.query("slect * from urls", function(urls){
+  url.each(function(url){
+    http.get(url, function(page){
+      save(page);  
+    });  
+  });  
+});                
+            </code></pre>
+          </section>
+         <section>
+         <h2> El coste de E/S </h2>
+         <ul>
+          <li>L1: 3 cycles </li>
+          <li>L2: 13 cycles </li>
+        <li>RAM: 250 cycles </li>
+        <li>Disk: 41,0000,000 cycles </li>
+          <li>Network: 240,000,000 cycles </li>
+         </ul>
+         <div><a href="http://nodejs.org/jsconf.pdf">http://nodejs.org/jsconf.pdf</a></div>
+         </section>
+        </section>
+        <section>
+         <section>
+            <img src="assets/image/why.jpg">
+         </section>
+         <section>
+            <h2>Node.js, javascript and the future </h2>
+            <p> Imprescindible charla de <a href="http://developmentseed.org/team/jeff-miccolis/">Jeff Miccolis</a> que con ejemplos explica por qué php y drupal es un infierno en según qué ciscunstancias y en node.js es fácil</p>
+            <img src="assets/image/atrium.jpg" >
+          </section>
+          <section>
+            <h3> OpenAtrium envío de notificaciones </h3>
+            <img src="assets/image/atrium_send.png">
+          </section>
+          <section>
+            <img src="assets/image/atrium_problem.png">
+          </section>
+          <section>
+            <img src="assets/image/atrium_problem2.png">
+          </section>
+          <section>
+          <h3> Código php envío de correos</h3>
+          <pre>  <code contenteditable>
+$addresses = array(
+  'jeff@mapbox.com',
+  'alex@mapbox.com',
+  'eric@mapbox.com'
+);
+$message = 'I am writing to inform you of a...';
+$count = 0;
+foreach($addresses as $sucker) {
+  if (mail($sucker, 'New opportunity', $message)) {
+    $count++;
+  };
+}
+echo "$count messages sent";
+          </code></pre>
+          </section>
+          <section>
+          <h3> Código js envío de correos</h3>
+          <pre>  <code contenteditable>
+var mail = require('mail');
+var addresses = [
+    'jeff@mapbox.com',
+    'alex@mapbox.com',
+    'eric@mapbox.com'
+];
+var message = 'I am writing to inform you of a...';
+var count = 0;
+addresses.forEach(function(sucker, i) {
+    mail(sucker, 'New opportunity', message, function(err) {
+        if (!err) { count++; }
+        if (i == addresses.length - 1) {
+            console.log(count +" messages sent");
+        } 
+    });
+});
+          </code></pre>
+          </section>
+
+          <section>
+          <pre>  <code contenteditable>
+// Attempt to send email.
+if (mail($sucker, 'New opportunity', $message)) {
+  $count++ 
+};
+// Once email is sent, get the next address.
+echo 'next';
+          </code></pre>
+          <pre>  <code contenteditable>
+// Attempt to send email.
+mail(sucker, 'New opportunity', message, function(err) {
+    if (!err) { count++; }
+});
+// Don't wait, get the next address NOW.
+console.log('next');
+          </code></pre>
+          </section>
+          <section>
+            <img src="assets/image/atrium_wait.png">
+          </section>
+          <section>
+            <img src="assets/image/atrium_wait2.png">
+          </section>
+
+          <section>
+            <h1> 100% asíncrono </h1>
+            <h3> Todo lo que sale de v8 devuelve <strong>"callback"</strong> </h3>
+            <h4> filesystem, network, stdio, timers, child processes </h4>
+          <pre><code>
+var fs = require('fs');
+fs.readFile('/etc/passwd', function (err, data) {
+  if (err) throw err;
+  console.log(data);
+});
+          </code></pre>
+          <pre><code>
+var request = require('request');
+request('http://example.com', function (err, resp, body) {
+    if (!err && resp.statusCode == 200) {
+        console.log(body);
+    }
+});
+          </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+          <h2>La filosofía de Node.js</h2>
+            <ul>
+              <li>Experimentación</li>
+              <li>Kernel pequeño en funcionalidades (<strong>"small core"</strong> Do you remember XD?)</li>
+              <li>Componentes libremente acoplados (Loosely coupled components)</li>
+            </ul>
+            <br>
+            <br>
+					  <blockquote cite="http://es.slideshare.net/sh1mmer/oscon-2011-nodejs-tutorial">
+              Stable is "stable"
+              Untable moves fast
+            </blockquote>
+            <br>
+            <a href="http://blog.nodejitsu.com/the-nodejs-philosophy">http://blog.nodejitsu.com/the-nodejs-philosophy</a>
+          </section>
+          <section>
+          <h3>¿Por qué es Node.js cool? (y no hablo de rendimiento)</h3>
+          <h6> Interpretando libremente lo que dice Nelson Elhage en su artículo</h6>
+          <br>
+					  <blockquote cite="http://es.slideshare.net/sh1mmer/oscon-2011-nodejs-tutorial">El resultado es que la mayoría de bibliotecas Node.js funcionan con esta filosofía.
+              Puedes elegir las bibliotecas Node.js arbitrarias y combinarlas en el mismo programa sin ni siquiera tener que preocuparte en lo que estás haciendo
+            </blockquote>
+            <br>
+          <a href="http://blog.nelhage.com/2012/03/why-node-js-is-cool/">http://blog.nelhage.com/2012/03/why-node-js-is-cool/</a>
+          </section>
+          <section>
+            <video src="assets/video/tweet_suena.mp4" controls loop muted preload="auto" poster="assets/image/poster-node.png" >
+            HTML5 Video is required for this example
+            </video> 
+          <!-- <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" -->
+          <!--   data-setup="{}"> -->
+          <!--   <source src="assets/video/tweet_suena.mp4" type="video/mp4" /> -->
+          <!--   <track kind="captions" src="css/captions.vtt" srclang="en" label="English" /> -->
+          <!-- </video> -->
+          </section>
+
+          <section>
+          <h2> Show me the code </h2>
+          <a href="https://github.com/karlosgliberal/tweetosc">https://github.com/karlosgliberal/tweetosc</a>
+          <br>
+          <pre><code>
+var twitter = require('ntwitter');
+    osc = require('omgosc');
+
+var twit = new twitter({
+  consumer_key: "",
+  consumer_secret: "",
+});
+movida['broadcast'] = true; 
+var sender = new osc.UdpSender('10.51.51.255', 7777, movida);
+          </pre></code>
+          </section>
+          
+          <section>
+          <h2> Show me the code </h2>
+          <a href="https://github.com/karlosgliberal/tweetosc">https://github.com/karlosgliberal/tweetosc</a>
+          <br>
+          <pre><code>
+twit.stream('statuses/filter', {track:'mod8'}, function(stream) {
+  stream.on('data', function (data) {
+    var palabras = text.split("");
+    for (var i = 0; i  palabras.length; i++) {
+      var text = data.text;
+      var palabras = text.split(" ")
+        for (var i = 0 i  text.length i++) {
+          sender.send("/osc_data", "s",  [text[i]]);
+        };
+        sender.send("/numero", "i",  [text.length]);
+    };
+  });
+  stream.on("error", function (response) {
+    console.log(response);
+  });
+});
+          </pre></code>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2> NPM Node Packaged Modules</h2>
+            <img src="assets/image/npm.png" class="bordered size_50">
+            <pre><code>
+              npm install mundo
+            </code></pre>
+          </section>
+          <section>
+            <h2>NPM</h2>
+            <img src="assets/image/npm_web.png" class="bordered size_50">
+          </section>
+          <section>
+          <h3>La importancia de NPM</h3>
+            <p> Npm es la herramienta fundamental para el manejo de dependencias o módulos en Node.js</p>
+            <br>
+            <ul>
+              <li>Publicar </li>
+              <li>Descubrir </li>
+              <li>Instalar </li>
+              <li>Desarrollar programas en Node.js </li>
+            </ul>
+            <br>
+            <div><a href="http://informatica27.wordpress.com/2012/04/18/una-introduccion-a-npm-nodejs/">Una introduccion a npm nodejs</a></div> 
+          </section>
+          <section>
+            <h2>Relación de algunos comandos de npm</h2>
+              <pre><code>npm init //Mediante un asistente crea el fichero package.json</code></pre>
+              <pre><code>npm search <nombre-del-modulo|palabra-clave> //busca en registro search.npmjs.org </code></pre>
+              <pre><code>npm info <nombre-del-modulo> //obtener info del paquete </code></pre>
+              <pre><code>npm outdated //busca si hay versiones instalados en el directorio actual </code></pre>
+              <pre><code>npm help //Para el resto</code></pre>
+          </section>
+          <section>
+            <h2>Publicar paquete en el registro npm </h2>
+            <h4>Tu código tendrá que estar provisto del fichero <strong>package.json</strong></h4>
+              <pre><code>
+{
+  "author": "Dean McNamee <dean@gmail.com>",
+  "name": "omgosc",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/deanm/omgosc.git"
+  },
+  "contributors": [
+    {
+      "name": "Oier Bravo Urtasun",
+      "email": "oierbravo@gmail.com"
+    }
+  ],
+  "main": "./omgosc"
+}              
+              </code></pre>
+          </section>
+          <section>
+            <h2>Publicar paquete en el registro npm </h2>
+              <pre><code>
+//Crear usuario
+npm adduser username pass email
+              </code></pre>
+              <pre><code>
+//Publicar paquete
+npm publish
+              </code></pre>
+              <blockquote ecite="https://npmjs.org/">
+                Paquetes totales: 16.138<br>
+
+                614.096  descargados en el último día
+                3.723.937 descargados en la última semana
+              </blockquote> 
+          </section>
+          <section>
+            <h2> Alguna referencia</h2>
+            <ul>
+              <li>Express </li>
+              <li>request </li>
+              <li>socket.io </li>
+              <li>nodejs mongoose </li>
+              <li>coffee-script </li>
+              <li>mocha </li>
+              <li>ntweeter </li>
+              <li>backbone </li>
+              <li>grunt</li>
+            </ul> 
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1> ¿Quien usa Node.js?</h1>
+          </section>
+          <section>
+            <h2> Nodejitsu </h2>
+            <img src="assets/image/nodejitsu.png">
+          </section>
+          <section>
+            <h2> Cloud9 </h2>
+            <img src="assets/image/cloud9.png">
+          </section>
+          <section>
+            <h2> developmentseed </h2>
+            <img src="assets/image/mapbox.png">
+          </section>
+          <section>
+            <h2> Yahoo </h2>
+            <img src="assets/image/mojito.png">
+          </section>
+          <section>
+            <h2> Microsoft </h2>
+            <img src="assets/image/typescript.png">
+          </section>
+          <section>
+            <h2> Linkedin </h2>
+            <img src="assets/image/linkedin.png">
+          </section>
+          <section>
+            <h2> Mozilla </h2>
+            <img src="assets/image/browserid.png">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2> Proyectos que me miran con ojitos golosos ;)</h2>
+          </section>
+          <section>
+            <h2> Derby </h2>
+            <h4>MVC framework making it easy to write realtime, collaborative applications that run in both Node.js and browsers.</h4>
+            <img src="assets/image/derby.png">
+          </section>
+          <section>
+            <h2> Express </h2>
+            <h4> Web application framework for node</h4>
+            <img src="assets/image/express.png">
+          </section>
+          <section>
+            <h2> Meteor </h2>
+            <h4> A better way to build apps</h4>
+            <img src="assets/image/meteor.png">
+          </section>
+          <section>
+            <h2> Flatiron </h2>
+            <h4>Build a collection of decoupled, unobtrusive tools that can operate as well in unison as they do independently. Promote code organization and sustainability by clearly separating development concerns.</h4>
+            <img src="assets/image/flatiron.png">
+          </section>
+        </section>
+        <section>                                                                                                                                                                                           
+          <h2>Enlaces, referencias y agradecimientos</h2>
+          <div>
+            <h3>Los creadores en la sombra </h3>
+                  <ul>
+                    <li>Aitor Resano Lafuente <a href="http://twitter.com/aitor_rl">@aitor_rl</a></li>
+                    <li>Miren Arrese Álvarez <a href="http://twitter.com/merisu">@merisu</a></li>
+                  </ul>
+          </div>
+          <div>
+            <a href="https://github.com/karlosgliberal/charla_drupalcamp">https://github.com/karlosgliberal/charla_drupalcamp</a>
+        </section>			
+
+			</div>
+			
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
+					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
+				]
+			});
+			
+		</script>
+
+	</body>
+</html>
